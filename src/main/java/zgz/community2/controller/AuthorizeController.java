@@ -23,18 +23,18 @@ public class AuthorizeController {
 
     @PostMapping("register")
     public String register(String username,
-                         String password,
-                         String email,
-                         String name,
-                         String phone,
-                         Integer gender,
-                         String birthday) {
+                           String password,
+                           String email,
+                           String name,
+                           String phone,
+                           Integer gender,
+                           String birthday) {
         User user = new User();
 
         User username1 = userMapper.userName(username);
 
 
-        if (username1 != null) {
+        if (username1.getUsername() != null) {
             System.out.println("用户已存在");
             return "register";
         } else if (username1 == null) {
@@ -63,19 +63,15 @@ public class AuthorizeController {
     @PostMapping("login")
     public String login(@RequestParam("username") String username,
                         @RequestParam("password") String password) {
-        User user = new User();
-        user.setUsername(username);
-        user.setPassword(password);
-        User usernamePassword=userMapper.usernamePassword(user.getUsername(), user.getPassword());
-
-        String password1 = usernamePassword.getPassword();
-        String username1 = usernamePassword.getUsername();
-        if (password1.equals(username)&&username1.equals(password)){
-            System.out.println("用户成功");
-            return "redirect:/";
+        try {
+            User usernamePassword = userMapper.usernamePassword(username, password);
+            if (username.equals(usernamePassword.getUsername()) && password.equals(usernamePassword.getPassword())) {
+                System.out.println("用户登录成功");
+                return "redirect:/";
+            }
+        }catch(NullPointerException e1){
+            e1.getMessage();
         }
-            System.out.println("密码or用户名错误");
-            return "redirect:/";
-
+        return "login";
     }
 }

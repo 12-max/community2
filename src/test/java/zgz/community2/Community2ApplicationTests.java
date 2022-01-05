@@ -10,5 +10,12 @@ import java.util.List;
 
 @SpringBootTest
 class Community2ApplicationTests {
+    @Autowired
+    UserMapper userMapper;
+    @Test
+    public void add(){
+        User usernamePassword = userMapper.usernamePassword("zgz123", "1234");
+        System.out.println(usernamePassword.toString());
 
+    }
 }
