@@ -9,6 +9,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import zgz.community2.mapper.UserMapper;
 import zgz.community2.model.User;
 
+import javax.servlet.http.HttpServletRequest;
+import java.util.Map;
+
 @Controller
 public class AuthorizeController {
 
@@ -62,10 +65,15 @@ public class AuthorizeController {
 
     @PostMapping("login")
     public String login(@RequestParam("username") String username,
-                        @RequestParam("password") String password) {
+                        @RequestParam("password") String password,
+                        HttpServletRequest request) {
+
         try {
             User usernamePassword = userMapper.usernamePassword(username, password);
             if (username.equals(usernamePassword.getUsername()) && password.equals(usernamePassword.getPassword())) {
+
+                request.getSession().setAttribute("user",username);
+
                 System.out.println("用户登录成功");
                 return "redirect:/";
             }
