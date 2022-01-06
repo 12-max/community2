@@ -69,8 +69,9 @@ public class AuthorizeController {
                 System.out.println("用户登录成功");
                 return "redirect:/";
             }
-        }catch(NullPointerException e1){
-            e1.getMessage();
+        }catch(NullPointerException e){
+            e.getMessage();
+            System.out.println("登录失败");
         }
         return "login";
     }

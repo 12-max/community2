@@ -2,8 +2,8 @@ package zgz.community2.service;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.lang.UsesSunMisc;
 import org.springframework.stereotype.Service;
+import zgz.community2.dto.PaginationDTO;
 import zgz.community2.dto.QuestionDTO;
 import zgz.community2.mapper.QuestionMapper;
 import zgz.community2.mapper.UserMapper;
@@ -35,16 +35,24 @@ public class QuestionService {
         return null;
     }*/
 
-    public List<QuestionDTO> listQuestion() {
-        List<Question> listQuestion = questionMapper.listQuestion();
-        List<QuestionDTO> questionDTOList=new ArrayList<>();
+    public PaginationDTO listQuestion(Integer page, Integer size) {
+
+        Integer offset = size * (page - 1);
+        List<Question> listQuestion = questionMapper.listQuestion(offset, size);
+        List<QuestionDTO> questionDTOList = new ArrayList<>();
+
+        PaginationDTO paginationDTO = new PaginationDTO();
         for (Question question : listQuestion) {
             User byId = userMapper.findById(question.getCreator());
             QuestionDTO questionDTO = new QuestionDTO();
-            BeanUtils.copyProperties(question,questionDTO);
+            BeanUtils.copyProperties(question, questionDTO);
             questionDTO.setUser(byId);
             questionDTOList.add(questionDTO);
         }
-        return questionDTOList;
+        paginationDTO.setData(questionDTOList);
+        Integer totalCount = questionMapper.count();
+        paginationDTO.setPagination(page,size);
+
+        return paginationDTO;
     }
 }

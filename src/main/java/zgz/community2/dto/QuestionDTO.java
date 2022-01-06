@@ -11,7 +11,6 @@ public class QuestionDTO {
     private Integer id;
     private String title;
     private String description;
-    @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private Long gmt_create;
     private Long gmt_modified;
     private Integer creator;
