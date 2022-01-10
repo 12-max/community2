@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import zgz.community2.mapper.UserMapper;
 import zgz.community2.model.User;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 
@@ -73,7 +74,6 @@ public class AuthorizeController {
             if (username.equals(usernamePassword.getUsername()) && password.equals(usernamePassword.getPassword())) {
 
                 request.getSession().setAttribute("user",username);
-
                 System.out.println("用户登录成功");
                 return "redirect:/";
             }
