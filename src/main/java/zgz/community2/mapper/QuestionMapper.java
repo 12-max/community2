@@ -1,9 +1,7 @@
 package zgz.community2.mapper;
 
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
+import zgz.community2.dto.QuestionDTO;
 import zgz.community2.model.Question;
 
 import java.util.List;
@@ -29,4 +27,10 @@ public interface QuestionMapper {
 
     @Select("select count(1) from question where creator=#{userid}")
     Integer countByUserId(@Param("userid") Integer userid);
+
+    @Select("select * from question where id = #{id}")
+    Question getById(@Param("id") Integer id);
+
+    @Update("update question set title = #{title},description = #{description},gmt_modified = #{gmt_modified} ,tag = #{tag} where id=#{id}")
+    void updata(Question question);
 }

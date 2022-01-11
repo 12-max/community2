@@ -11,6 +11,7 @@ import zgz.community2.model.User;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.Map;
 
 @Controller
@@ -73,7 +74,7 @@ public class AuthorizeController {
             User usernamePassword = userMapper.usernamePassword(username, password);
             if (username.equals(usernamePassword.getUsername()) && password.equals(usernamePassword.getPassword())) {
 
-                request.getSession().setAttribute("user",username);
+                request.getSession().setAttribute("user",usernamePassword);
                 System.out.println("用户登录成功");
                 return "redirect:/";
             }
@@ -82,5 +83,15 @@ public class AuthorizeController {
             System.out.println("登录失败");
         }
         return "login";
+    }
+
+    @GetMapping("/loginOut")
+    public String loginOut(HttpServletRequest request,
+                           HttpServletResponse response){
+        request.getSession().removeAttribute("user");
+        Cookie user = new Cookie("user", null);
+        user.setMaxAge(0);
+        response.addCookie(user);
+        return "redirect:/";
     }
 }

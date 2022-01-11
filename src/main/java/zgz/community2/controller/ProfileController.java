@@ -30,8 +30,8 @@ public class ProfileController {
             HttpServletRequest request,
             @RequestParam(name = "page",defaultValue = "1",required = false) Integer page,
             @RequestParam(name = "size",defaultValue = "5",required = false) Integer size){
-        String user = (String) request.getSession().getAttribute("user");
-        User userName = userMapper.userName(user);
+        User user = (User) request.getSession().getAttribute("user");
+        User userName = userMapper.userName(user.getUsername());
         if (userName==null){
             return "redirect:/";
         }
@@ -44,7 +44,6 @@ public class ProfileController {
             model.addAttribute("sectionName","我的回复");
         }
         PaginationDTO paginationDTO = questionService.listQuestion(userName.getId(), page, size);
-        System.out.println(paginationDTO.toString());
         model.addAttribute("pagination",paginationDTO);
         return "profile";
     }
