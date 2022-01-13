@@ -5,11 +5,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import zgz.community2.dto.PaginationDTO;
 import zgz.community2.dto.QuestionDTO;
+import zgz.community2.exception.CustomizeErrorCode;
+import zgz.community2.exception.CustomizeException;
 import zgz.community2.mapper.QuestionMapper;
 import zgz.community2.mapper.UserMapper;
 import zgz.community2.model.Question;
 import zgz.community2.model.User;
 
+import javax.smartcardio.CardException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -101,6 +104,9 @@ public class QuestionService {
 
     public QuestionDTO getById(Integer id) {
         Question question = questionMapper.getById(id);
+        if(question==null){
+            throw new CustomizeException("你找到问题不在了要不要换个试试");
+        }
         QuestionDTO questionDTO = new QuestionDTO();
         BeanUtils.copyProperties(question, questionDTO);
         User user = userMapper.findById(question.getCreator());
@@ -115,7 +121,16 @@ public class QuestionService {
             questionMapper.addQuestion(question);
         }else {
             question.setGmt_modified(System.currentTimeMillis());
-            questionMapper.updata(question);
+            questionMapper.update(question);
+            if (question!=null){
+                throw new CustomizeException(CustomizeErrorCode.QUESTION_NOT_FOUND);
+            }
         }
+    }
+
+    public void inView(Integer id) {
+        Question question = questionMapper.getById(id);
+        question.setView_count(question.getView_count()+1);
+        questionMapper.update(question);
     }
 }

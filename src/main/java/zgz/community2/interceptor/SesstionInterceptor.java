@@ -30,7 +30,7 @@ class SessionInterceptor implements HandlerInterceptor {
                 }
             }
         }
-        System.out.println("执行方法拦截器");
+        System.out.println("拦截器");
         return true;
     }
 
