@@ -10,7 +10,7 @@ import java.util.List;
 public interface QuestionMapper {
 
 
-    @Insert("insert into question (title, description,gmt_create,gmt_modified,creator,tag) VALUES (#{title}, #{description},#{gmt_create},#{gmt_modified},#{creator},#{tag})")
+    @Insert("insert into question (title, description,gmt_create,gmt_modified,creator,tag) value (#{title}, #{description},#{gmt_create},#{gmt_modified},#{creator},#{tag})")
     public void addQuestion(Question question);
 
     @Select("select * from question limit #{offset},#{size}")

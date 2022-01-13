@@ -26,6 +26,9 @@ public class publishController {
     @Autowired
     private QuestionService questionService;
 
+    @Autowired
+    private UserMapper userMapper;
+
 
     @GetMapping("/publish/{id}")
     public String edit(@PathVariable(name = "id") Integer id,
@@ -58,12 +61,17 @@ public class publishController {
         model.addAttribute("tag",tag);
         model.addAttribute("id",id);
 
+        User user = (User) request.getSession().getAttribute("user");
+
+        User user1 = userMapper.userName(user.getUsername());
+
+
         Question question = new Question();
         question.setTitle(title);
         question.setDescription(description);
         question.setTag(tag);
         question.setId(id);
-
+        question.setCreator(user1.getId());
         questionService.createOrUpdate(question);
         return "redirect:/";
     }

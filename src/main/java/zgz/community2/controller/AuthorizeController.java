@@ -12,7 +12,6 @@ import zgz.community2.model.User;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.Map;
 
 @Controller
 public class AuthorizeController {
@@ -74,7 +73,10 @@ public class AuthorizeController {
             User usernamePassword = userMapper.usernamePassword(username, password);
             if (username.equals(usernamePassword.getUsername()) && password.equals(usernamePassword.getPassword())) {
 
+
+                // 用户登入成功后将用户信息存入session中
                 request.getSession().setAttribute("user",usernamePassword);
+                System.out.println("存入成功");
                 System.out.println("用户登录成功");
                 return "redirect:/";
             }

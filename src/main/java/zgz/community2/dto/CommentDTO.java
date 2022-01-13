@@ -1,0 +1,13 @@
+package zgz.community2.dto;
+
+
+import lombok.Data;
+
+@Data
+public class CommentDTO {
+    private Long parent_id;
+    private String content;
+    private Integer type;
+
+
+}
