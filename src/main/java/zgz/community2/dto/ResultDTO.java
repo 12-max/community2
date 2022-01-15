@@ -1,6 +1,8 @@
 package zgz.community2.dto;
 
 
+import zgz.community2.exception.CustomizeErrorCode;
+import zgz.community2.exception.CustomizeException;
 
 public class ResultDTO {
 
@@ -14,6 +16,11 @@ public class ResultDTO {
         return resultDTO;
     }
 
+    public static ResultDTO ok(){
+        ResultDTO resultDTO = new ResultDTO(200,"请求成功");
+        return resultDTO;
+    }
+
 
 
 
@@ -24,6 +31,14 @@ public class ResultDTO {
     public ResultDTO(Integer code, String message) {
         this.code = code;
         this.message = message;
+    }
+
+    public static ResultDTO error(CustomizeErrorCode noLogin) {
+        return error(noLogin.getCode(),noLogin.getMessage());
+    }
+
+    public static ResultDTO error(CustomizeException e) {
+        return ResultDTO.error(e.getCode(), e.getMessage());
     }
 
 

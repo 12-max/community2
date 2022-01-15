@@ -53,7 +53,7 @@ public class QuestionService {
         List<QuestionDTO> questionDTOList = new ArrayList<>();
 
         for (Question question : listQuestion) {
-            User byId = userMapper.findById(question.getCreator());
+            User byId = userMapper.findById( question.getCreator());
             QuestionDTO questionDTO = new QuestionDTO();
             BeanUtils.copyProperties(question, questionDTO);
             questionDTO.setUser(byId);
@@ -64,7 +64,7 @@ public class QuestionService {
         return paginationDTO;
     }
 
-    public PaginationDTO listQuestion(Integer userid, Integer page, Integer size) {
+    public PaginationDTO listQuestion(Long userid, Integer page, Integer size) {
 
         PaginationDTO paginationDTO = new PaginationDTO();
 
@@ -102,10 +102,10 @@ public class QuestionService {
         return paginationDTO;
     }
 
-    public QuestionDTO getById(Integer id) {
+    public QuestionDTO getById(Long id) {
         Question question = questionMapper.getById(id);
         if(question==null){
-            throw new CustomizeException("你找到问题不在了要不要换个试试");
+            throw new CustomizeException(CustomizeErrorCode.QUESTION_NOT_FOUND);
         }
         QuestionDTO questionDTO = new QuestionDTO();
         BeanUtils.copyProperties(question, questionDTO);
@@ -128,7 +128,7 @@ public class QuestionService {
         }
     }
 
-    public void inView(Integer id) {
+    public void inView(Long id) {
         Question question = questionMapper.getById(id);
         question.setView_count(question.getView_count()+1);
         questionMapper.update(question);
