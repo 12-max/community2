@@ -1,6 +1,5 @@
 package zgz.community2.model;
 
-
 public class Comment {
     private Long id;
     private Long parent_id;
@@ -10,6 +9,7 @@ public class Comment {
     private Long gmt_modified;
     private Long like_count;
     private String content;
+
 
     public Long getId() {
         return id;
@@ -73,5 +73,19 @@ public class Comment {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    @Override
+    public String toString() {
+        return "Comment{" +
+                "id=" + id +
+                ", parent_id=" + parent_id +
+                ", type=" + type +
+                ", commentator=" + commentator +
+                ", gmt_create=" + gmt_create +
+                ", gmt_modified=" + gmt_modified +
+                ", like_count=" + like_count +
+                ", content='" + content + '\'' +
+                '}';
     }
 }

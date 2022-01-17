@@ -22,3 +22,24 @@
     color: #999;
     font-size: 14px;
 }
+.menu {
+    color: #999;
+    margin-top: 15px;
+}
+.menu .icon {
+    margin-right: 6px;
+    font-size: 15px;
+    cursor:pointer;
+}
+sub-comments {
+    border-radius: 5px;
+    margin-top: 10px;
+    border: 1px solid #eee;
+    padding-top: 15px;
+}
+.menu .active {
+    color: #499ef3;
+}
+.menu .icon:hover{
+    color: #499ef3;
+}

@@ -14,6 +14,7 @@ import zgz.community2.model.User;
 
 import javax.smartcardio.CardException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -33,19 +34,19 @@ public class QuestionService {
         Integer totalPage;
         Integer totalCount = questionMapper.count();
 
-        if (totalCount% size==0){
-            totalPage=totalCount/size;
-        }else {
-            totalPage=totalCount/size+1;
+        if (totalCount % size == 0) {
+            totalPage = totalCount / size;
+        } else {
+            totalPage = totalCount / size + 1;
         }
-        if (page<1){
-            page=1;
+        if (page < 1) {
+            page = 1;
         }
-        if (page>totalPage){
-            page=totalPage;
+        if (page > totalPage) {
+            page = totalPage;
         }
 
-        paginationDTO.setPagination(totalPage,page);
+        paginationDTO.setPagination(totalPage, page);
 
         //size*(page-1)
         Integer offset = size * (page - 1);
@@ -53,7 +54,7 @@ public class QuestionService {
         List<QuestionDTO> questionDTOList = new ArrayList<>();
 
         for (Question question : listQuestion) {
-            User byId = userMapper.findById( question.getCreator());
+            User byId = userMapper.findById(question.getCreator());
             QuestionDTO questionDTO = new QuestionDTO();
             BeanUtils.copyProperties(question, questionDTO);
             questionDTO.setUser(byId);
@@ -71,23 +72,23 @@ public class QuestionService {
         Integer totalPage;
         Integer totalCount = questionMapper.countByUserId(userid);
 
-        if (totalCount% size==0){
-            totalPage=totalCount/size;
-        }else {
-            totalPage=totalCount/size+1;
+        if (totalCount % size == 0) {
+            totalPage = totalCount / size;
+        } else {
+            totalPage = totalCount / size + 1;
         }
-        if (page<1){
-            page=1;
+        if (page < 1) {
+            page = 1;
         }
-        if (page>totalPage){
-            page=totalPage;
+        if (page > totalPage) {
+            page = totalPage;
         }
 
-        paginationDTO.setPagination(totalPage,page);
+        paginationDTO.setPagination(totalPage, page);
 
         //size*(page-1)
         Integer offset = size * (page - 1);
-        List<Question> listQuestion = questionMapper.listByUserId(userid,offset, size);
+        List<Question> listQuestion = questionMapper.listByUserId(userid, offset, size);
         List<QuestionDTO> questionDTOList = new ArrayList<>();
 
         for (Question question : listQuestion) {
@@ -104,7 +105,7 @@ public class QuestionService {
 
     public QuestionDTO getById(Long id) {
         Question question = questionMapper.getById(id);
-        if(question==null){
+        if (question == null) {
             throw new CustomizeException(CustomizeErrorCode.QUESTION_NOT_FOUND);
         }
         QuestionDTO questionDTO = new QuestionDTO();
@@ -115,14 +116,14 @@ public class QuestionService {
     }
 
     public void createOrUpdate(Question question) {
-        if (question.getId()==null){
+        if (question.getId() == null) {
             question.setGmt_create(System.currentTimeMillis());
             question.setGmt_modified(System.currentTimeMillis());
             questionMapper.addQuestion(question);
-        }else {
+        } else {
             question.setGmt_modified(System.currentTimeMillis());
             questionMapper.update(question);
-            if (question!=null){
+            if (question != null) {
                 throw new CustomizeException(CustomizeErrorCode.QUESTION_NOT_FOUND);
             }
         }
@@ -130,7 +131,17 @@ public class QuestionService {
 
     public void inView(Long id) {
         Question question = questionMapper.getById(id);
-        question.setView_count(question.getView_count()+1);
+        question.setView_count(question.getView_count() + 1);
         questionMapper.update(question);
+    }
+
+    public ArrayList<QuestionDTO> related(Long id,String str) {
+
+        if (id!=null) {
+            str = str.replace(",", "|");
+            ArrayList<QuestionDTO> related = questionMapper.related(id, str);
+            return related;
+        }
+        return null;
     }
 }

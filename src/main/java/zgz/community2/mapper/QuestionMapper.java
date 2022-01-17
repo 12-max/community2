@@ -4,6 +4,7 @@ import org.apache.ibatis.annotations.*;
 import zgz.community2.dto.QuestionDTO;
 import zgz.community2.model.Question;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Mapper
@@ -33,4 +34,8 @@ public interface QuestionMapper {
 
     @Update("update question set title = #{title},description = #{description},view_count = #{view_count},gmt_modified = #{gmt_modified} ,tag = #{tag} where id=#{id}")
     void update(Question question);
+
+    @Select("select id,title,tag from question where tag regexp #{str} and id!=#{id}")
+    ArrayList<QuestionDTO> related(Long id,String str);
+
 }
