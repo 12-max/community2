@@ -26,9 +26,10 @@ public class IndexController {
     @GetMapping("/")
     public String Index(Model model,
                         @RequestParam(name = "page",defaultValue = "1",required = false) Integer page,
-                        @RequestParam(name = "size",defaultValue = "5",required = false) Integer size){
+                        @RequestParam(name = "size",defaultValue = "5",required = false) Integer size,
+                        @RequestParam(name = "search",required = false)String search){
 
-        PaginationDTO pagination = questionService.listQuestion(page,size);
+        PaginationDTO pagination = questionService.listQuestion(search,page,size);
         model.addAttribute("pagination",pagination);
         return "index";
     }

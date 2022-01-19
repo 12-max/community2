@@ -1,8 +1,10 @@
 package zgz.community2.service;
 
+
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 import zgz.community2.dto.PaginationDTO;
 import zgz.community2.dto.QuestionDTO;
 import zgz.community2.exception.CustomizeErrorCode;
@@ -12,10 +14,10 @@ import zgz.community2.mapper.UserMapper;
 import zgz.community2.model.Question;
 import zgz.community2.model.User;
 
-import javax.smartcardio.CardException;
 import java.util.ArrayList;
-import java.util.Collections;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class QuestionService {
@@ -27,7 +29,15 @@ public class QuestionService {
     private UserMapper userMapper;
 
 
-    public PaginationDTO listQuestion(Integer page, Integer size) {
+    public PaginationDTO listQuestion(String search, Integer page, Integer size) {
+
+            if (search!=null){
+                String[] tags = StringUtils.split(search, "");
+                 search = Arrays.stream(tags).collect(Collectors.joining("|"));
+            }
+
+
+
 
         PaginationDTO paginationDTO = new PaginationDTO();
 

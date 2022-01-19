@@ -23,8 +23,7 @@
                 </a>
             </div>
             <div class="media-body">
-                <h4 class="media-heading" th:text="${question.title}">这么快速学会Java</h4>
-                <span th:text="${question.description}"></span><br>
+                <a th:href="@{'/questions/'+${question.id}}" th:text="${question.title}"></a>
                 <span class="text-desc"><span th:text="${question.comment_count}"></span>个回复 · <span th:text="${question.view_count}"></span> 次浏览 <td th:text="${#dates.format(question.gmt_create,'yyyy-MM-dd')}"></td>
             </div>
         </div>

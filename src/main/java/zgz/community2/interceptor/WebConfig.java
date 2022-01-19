@@ -29,11 +29,15 @@ public class WebConfig implements WebMvcConfigurer {
         interceptorRegistration.excludePathPatterns( // 这个括号里面是放行的一些配置
                 "/**/*.html", // 放i选哪个所有的.html文件
                 "/**/*.css",
-                "/**/*.js",
+                "/**/js/lib/**",
+                "/**//*.js",
                 "/toLogin",
                 "/register",
                 "/login",
-                "/comment"
+                "/comment",
+                "/images",
+                "/questions/**/",
+                "/"
 //                "/test/*"  // 放行前缀为test的接口
         );
     }

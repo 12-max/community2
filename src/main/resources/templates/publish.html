@@ -4,11 +4,12 @@
     <title>小张社区</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <link rel="stylesheet" href="/css/bootstrap.css">
+    <link rel="stylesheet" href="/css/editormd.min.css">
     <link rel="stylesheet" href="/css/bootstrap-theme.css">
     <link rel="stylesheet" href="/css/community.css">
-    <link rel="stylesheet" href="/css/editormd.css">
-    <style  src="/js/editormd.min.js"></style>
+
     <script src="/js/jquery-3.6.0.min.js"></script>
+    <style  src="/js/editormd.js"></style>
     <script src="/js/bootstrap.js"></script>
 
 </head>
@@ -26,16 +27,39 @@
                     <input type="text" class="form-control" th:value="${title}" name="title" id="title"
                            placeholder="问题标题">
                 </div>
-                <div class="form-group" >
+                <div class="form-group"  id="question-editor">
                     <label for="description">问题补充</label>
                     <textarea name="description" id="description" th:value="${description}"
-                              class="form-control" cols="30" rows="10"></textarea>
+                              class="form-control" style="display: none"
+                              cols="30" rows="10"></textarea>
                 </div>
+                <script type="text/javascript">
+                    $(function () {
+                        var editor=editormd("question-editor",{
+                            width : "100%",
+                            height : "350px",
+                            path    : "/js/lib/"
+                        })
+
+                    })
+                </script>
                 <div class="form-group">
                     <label for="tag">添加标签：</label>
                     <input type="text" class="form-control"
                            name="tag" th:value="${tag}"
-                           id="tag"placeholder="输入标签，以','隔开">
+                           id="tag"placeholder="输入标签，以','隔开"
+                            onclick="showSelectTag()">
+
+                    ---------------------------------------------------
+                  <div>
+                      <span class="glyphicon glyphicon-tags">
+                          <span class="label label-info" onclick="selectTag('spring')">Spring</span>
+                      </span>
+                      <span class="glyphicon glyphicon-tags">
+                          <span class="label label-info" onclick="selectTag('java')">java</span>
+                      </span>
+                  </div>
+                    ------------------------------------------------------------------------------------
                 </div>
                 <div class="container-fluid main">
                     <div class="row">

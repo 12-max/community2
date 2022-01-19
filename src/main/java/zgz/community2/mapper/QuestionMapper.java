@@ -38,4 +38,6 @@ public interface QuestionMapper {
     @Select("select id,title,tag from question where tag regexp #{str} and id!=#{id}")
     ArrayList<QuestionDTO> related(Long id,String str);
 
+    @Select("select count(*) from question where title regexp #{tag} ")
+    Integer countBySearch(QuestionDTO questionDTO);
 }
