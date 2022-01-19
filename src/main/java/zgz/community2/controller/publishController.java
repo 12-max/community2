@@ -1,6 +1,5 @@
 package zgz.community2.controller;
 
-import com.sun.xml.internal.messaging.saaj.packaging.mime.util.QDecoderStream;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -9,15 +8,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import zgz.community2.dto.QuestionDTO;
-import zgz.community2.mapper.QuestionMapper;
 import zgz.community2.mapper.UserMapper;
 import zgz.community2.model.Question;
 import zgz.community2.model.User;
 import zgz.community2.service.QuestionService;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 @Controller
 public class publishController {
